@@ -45,6 +45,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "pack": "npm version patch && cp -r dist release/dist && cp package.json release/package.json && cp README.md release/README.md",
     "preview": "vite preview",
     "lint": "eslint src/**/*.ts{,x}",
     "lint:fix": "npm run lint -- --fix",
@@ -64,7 +65,7 @@
     "@storybook/addon-interactions": "^6.5.10",
     "@storybook/addon-links": "^6.5.10",
     "@storybook/builder-vite": "^0.2.2",
-    "@storybook/react": "^7.4.6",
+    "@storybook/react": "^7.6.20",
     "@storybook/testing-library": "^0.0.13",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",

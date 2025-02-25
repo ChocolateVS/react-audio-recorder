@@ -85,7 +85,7 @@ const AudioRecorder: (props: Props) => ReactElement = ({
     await ffmpeg.run("-i", inputName, outputName);
 
     const outputData = ffmpeg.FS("readFile", outputName);
-    const outputBlob = new Blob([outputData.buffer], {
+    const outputBlob = new Blob([outputData.buffer as ArrayBuffer], {
       type: `audio/${downloadFileExtension}`,
     });
 
@@ -134,15 +134,18 @@ const AudioRecorder: (props: Props) => ReactElement = ({
       }`}
       data-testid="audio_recorder"
     >
-      <img
-        src={isRecording ? saveSVG : micSVG}
-        className={`audio-recorder-mic ${
-          classes?.AudioRecorderStartSaveClass ?? ""
-        }`}
-        onClick={isRecording ? () => stopAudioRecorder() : startRecording}
-        data-testid="ar_mic"
-        title={isRecording ? "Save recording" : "Start recording"}
-      />
+      {!isRecording && (
+        <img
+          src={micSVG}
+          className={`audio-recorder-mic ${
+            classes?.AudioRecorderStartClass ?? ""
+          }`}
+          onClick={startRecording}
+          data-testid="ar_mic"
+          title="Start recording"
+        />
+      )}
+
       <span
         className={`audio-recorder-timer ${
           !isRecording ? "display-none" : ""
@@ -185,15 +188,6 @@ const AudioRecorder: (props: Props) => ReactElement = ({
         </span>
       )}
       <img
-        src={isPaused ? resumeSVG : pauseSVG}
-        className={`audio-recorder-options ${
-          !isRecording ? "display-none" : ""
-        } ${classes?.AudioRecorderPauseResumeClass ?? ""}`}
-        onClick={togglePauseResume}
-        title={isPaused ? "Resume recording" : "Pause recording"}
-        data-testid="ar_pause"
-      />
-      <img
         src={discardSVG}
         className={`audio-recorder-options ${
           !isRecording ? "display-none" : ""
@@ -202,6 +196,26 @@ const AudioRecorder: (props: Props) => ReactElement = ({
         title="Discard Recording"
         data-testid="ar_cancel"
       />
+      <img
+        src={isPaused ? resumeSVG : pauseSVG}
+        className={`audio-recorder-options ${
+          !isRecording ? "display-none" : ""
+        } ${classes?.AudioRecorderPauseResumeClass ?? ""}`}
+        onClick={togglePauseResume}
+        title={isPaused ? "Resume recording" : "Pause recording"}
+        data-testid="ar_pause"
+      />
+      {isRecording && (
+        <img
+          src={saveSVG}
+          className={`audio-recorder-mic ${
+            classes?.AudioRecorderSaveClass ?? ""
+          }`}
+          onClick={() => stopAudioRecorder()}
+          data-testid="ar_mic"
+          title="Save recording"
+        />
+      )}
     </div>
   );
 };

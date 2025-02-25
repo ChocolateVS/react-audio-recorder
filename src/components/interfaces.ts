@@ -9,9 +9,13 @@ interface StyleProps {
    **/
   AudioRecorderClass?: string;
   /**
-   * Applies passed classes to audio recorder start/save option
+   * Applies passed classes to audio recorder start option
    **/
-  AudioRecorderStartSaveClass?: string;
+  AudioRecorderStartClass?: string;
+  /**
+   * Applies passed classes to audio recorder save option
+   **/
+  AudioRecorderSaveClass?: string;
   /**
    * Applies passed classes to audio recorder timer
    **/
